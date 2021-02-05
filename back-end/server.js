@@ -1,7 +1,10 @@
 const express = require('express')
-require('./db/db_config')
+const app = require('./app')
 const server = express()
 const port = process.env.PORT || 3000
+
+app.set('port', port)
+
 server.listen(port, () => {
     console.log('listening on port' + port)
 })
