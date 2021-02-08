@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-const User = require('../modulus/auth_modulus')
+const User = require('../models/auth_models')
 
 exports.signup = async(req, res, next) => {
     const { email, password } = await req.body

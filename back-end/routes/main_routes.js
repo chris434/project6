@@ -1,13 +1,16 @@
 const express = require('express')
+const sousesCtrl = require('../controllers/sauce')
+const auth = require('../middle_wear/auth')
+const multer = require('../middle_wear/multer_config')
 const router = express.Router()
 
 //get routes
-// router.get('sauces')
-// router.get('sauces/:id')
+router.post('/', auth, multer, sousesCtrl.createSauce)
+    // router.post('/sauces/:id/like')
 
-//post routes
-// router.post('sauces')
-// router.post('/sauces/:id/like')
+//get routes
+router.get('/', auth, sousesCtrl.createSauce)
+    // router.get('sauces/:id')
 
 //put routes
 // router.put('/sauces/:id')
