@@ -31,3 +31,12 @@ exports.sauce = async(req, res, next) => {
     }
 
 }
+exports.sauceById = async(req, res, next) => {
+    try {
+        const sauce = await Sauce.findById(req.params.id)
+        console.log(req.params.id)
+        res.status(200).json(sauce)
+    } catch {
+        res.status(401).json({ message: 'no sauce with this id' })
+    }
+}
