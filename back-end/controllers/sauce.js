@@ -14,13 +14,20 @@ exports.createSauce = async(req, res, next) => {
             heat: heat
         })
         await newSauce.save()
-        res.status(201).send({ message: 'sauce successfully created' })
+        res.status(201).json({ message: 'sauce successfully created' })
     } catch (e) {
-        res.status(500).send({ message: 'unable to save sauce' })
+        res.status(500).json({ message: 'unable to save sauce' })
     }
 
 }
 
 exports.sauce = async(req, res, next) => {
-    res.json({ message: 'p' })
+    try {
+        const allSauces = await Sauce.find()
+        console.log(allSauces)
+        res.status(200).json(allSauces)
+    } catch {
+        res.status(401).json({ message: 'no sauces to display' })
+    }
+
 }

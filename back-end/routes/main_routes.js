@@ -9,7 +9,7 @@ router.post('/', auth, multer, sousesCtrl.createSauce)
     // router.post('/sauces/:id/like')
 
 //get routes
-router.get('/', auth, sousesCtrl.createSauce)
+router.get('/', auth, sousesCtrl.sauce)
     // router.get('sauces/:id')
 
 //put routes
