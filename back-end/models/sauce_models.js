@@ -1,9 +1,5 @@
 const mongoose = require('mongoose')
 const sauce = mongoose.Schema({
-    userId: {
-        type: String,
-        required: true
-    },
     name: {
         type: String,
         required: true
@@ -26,6 +22,10 @@ const sauce = mongoose.Schema({
     },
     heat: {
         type: Number,
+        required: true
+    },
+    userId: {
+        type: String,
         required: true
     },
     dislikes: {

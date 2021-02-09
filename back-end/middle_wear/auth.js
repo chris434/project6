@@ -6,7 +6,8 @@ module.exports = async(req, res, next) => {
         const token = req.headers.authorization.split(' ')[1]
         const decodeToken = jwt.verify(token, process.env.SECRET_TOKEN)
 
-        if (req.body.userId && req.body.userId != decodeToken.id) {
+        console.log(decodeToken.userId)
+        if (req.body.userId && req.body.userId != decodeToken.userId) {
             throw 'invalid user'
         } else {
             next()

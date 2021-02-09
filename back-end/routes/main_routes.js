@@ -13,7 +13,7 @@ router.get('/', auth, sousesCtrl.sauce)
 router.get('/:id', auth, sousesCtrl.sauceById)
 
 //put routes
-// router.put('/sauces/:id')
+router.put('/:id', auth, multer, sousesCtrl.modifySauce)
 
 //delete routes
 // router.delete('/sauces/:id')
