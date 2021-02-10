@@ -16,6 +16,6 @@ router.get('/:id', auth, sousesCtrl.sauceById)
 router.put('/:id', auth, multer, sousesCtrl.modifySauce)
 
 //delete routes
-// router.delete('/sauces/:id')
+// router.delete('/:id', auth, sousesCtrl.deleteSauce)
 
 module.exports = router

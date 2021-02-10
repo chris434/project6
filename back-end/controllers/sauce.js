@@ -42,6 +42,7 @@ exports.sauceById = async(req, res, next) => {
     }
 }
 
+
 exports.modifySauce = async(req, res, next) => {
 
     try {
@@ -70,5 +71,19 @@ exports.modifySauce = async(req, res, next) => {
         return res.status(200).json({ message: 'Sauce updated' })
     } catch {
         return res.status(400).json({ message: 'Could not update sauce' })
+    }
+}
+
+
+exports.deleteSauce = async(req, res) => {
+    try {
+        const sauce = await Sauce.findById(req.params.id)
+        fs.unlink('images/' + sauce.imageUrl.split('/images/')[1], (error) => {
+            if (error) throw error
+        })
+        await Sauce.findByIdAndDelete(req.params.id)
+        return res.status(200).json({ message: 'Sauce updated' })
+    } catch {
+        return res.status(400).json({ message: 'Could not find sauce id' })
     }
 }
