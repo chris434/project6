@@ -6,7 +6,7 @@ const router = express.Router()
 
 //get routes
 router.post('/', auth, multer, sousesCtrl.createSauce)
-    // router.post('/sauces/:id/like')
+router.post('/:id/like', auth, sousesCtrl.likeSauce)
 
 //get routes
 router.get('/', auth, sousesCtrl.sauce)
@@ -16,6 +16,6 @@ router.get('/:id', auth, sousesCtrl.sauceById)
 router.put('/:id', auth, multer, sousesCtrl.modifySauce)
 
 //delete routes
-// router.delete('/:id', auth, sousesCtrl.deleteSauce)
+router.delete('/:id', auth, sousesCtrl.deleteSauce)
 
 module.exports = router

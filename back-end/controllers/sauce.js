@@ -75,7 +75,7 @@ exports.modifySauce = async(req, res, next) => {
 }
 
 
-exports.deleteSauce = async(req, res) => {
+exports.deleteSauce = async(req, res, next) => {
     try {
         const sauce = await Sauce.findById(req.params.id)
         fs.unlink('images/' + sauce.imageUrl.split('/images/')[1], (error) => {
@@ -85,5 +85,42 @@ exports.deleteSauce = async(req, res) => {
         return res.status(200).json({ message: 'Sauce updated' })
     } catch {
         return res.status(400).json({ message: 'Could not find sauce id' })
+    }
+}
+exports.likeSauce = async(req, res, next) => {
+    try {
+        let likeStatus
+        const { userId, like } = req.body
+        const sauce = await Sauce.findById(req.params.id)
+
+        let disLikeIds = sauce.usersDisLiked.filter(storedIds => {
+            return storedIds != userId
+        })
+        let likeIds = sauce.usersLiked.filter(storedIds => {
+            return storedIds != userId
+        })
+
+        if (like == -1) {
+            likeStatus = 'disliked'
+            disLikeIds.push(userId)
+        } else if (like == 1) {
+            likeStatus = 'liked'
+            likeIds.push(userId)
+        }
+
+        const likeInfo = {
+            dislikes: disLikeIds.length,
+            likes: likeIds.length,
+            usersDisLiked: disLikeIds,
+            usersLiked: likeIds
+        }
+        console.log(disLikeIds)
+        console.log(likeIds)
+
+        await Sauce.findByIdAndUpdate(req.params.id, likeInfo)
+        res.status(200).json({ message: `Sauce has been ${likeStatus}` })
+
+    } catch (error) {
+        res.status(400).json({ error })
     }
 }
