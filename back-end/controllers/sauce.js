@@ -82,7 +82,7 @@ exports.deleteSauce = async(req, res, next) => {
             if (error) throw error
         })
         await Sauce.findByIdAndDelete(req.params.id)
-        return res.status(200).json({ message: 'Sauce updated' })
+        return res.status(200).json({ message: 'Sauce deleted' })
     } catch {
         return res.status(400).json({ message: 'Could not find sauce id' })
     }
@@ -114,11 +114,9 @@ exports.likeSauce = async(req, res, next) => {
             usersDisLiked: disLikeIds,
             usersLiked: likeIds
         }
-        console.log(disLikeIds)
-        console.log(likeIds)
 
         await Sauce.findByIdAndUpdate(req.params.id, likeInfo)
-        res.status(200).json({ message: `Sauce has been ${likeStatus}` })
+        return res.status(200).json({ message: `Sauce has been ${likeStatus}` })
 
     } catch (error) {
         res.status(400).json({ error })

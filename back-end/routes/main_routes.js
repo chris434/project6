@@ -1,6 +1,7 @@
 const express = require('express')
 const sousesCtrl = require('../controllers/sauce')
 const auth = require('../middle_wear/auth')
+const authAccess = require('../middle_wear/auth-protected')
 const multer = require('../middle_wear/multer_config')
 const router = express.Router()
 
@@ -13,9 +14,9 @@ router.get('/', auth, sousesCtrl.sauce)
 router.get('/:id', auth, sousesCtrl.sauceById)
 
 //put routes
-router.put('/:id', auth, multer, sousesCtrl.modifySauce)
+router.put('/:id', authAccess, multer, sousesCtrl.modifySauce)
 
 //delete routes
-router.delete('/:id', auth, sousesCtrl.deleteSauce)
+router.delete('/:id', authAccess, sousesCtrl.deleteSauce)
 
 module.exports = router
