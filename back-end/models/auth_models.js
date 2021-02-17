@@ -9,8 +9,10 @@ const user = new mongoose.Schema({
     },
     password: {
         type: String,
-        required: true
+        required: true,
+        minlength: [8, 'password must be min at least 8 characters']
     }
+
 
 })
 user.plugin(uniqueValidator)
