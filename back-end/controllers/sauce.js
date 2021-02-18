@@ -16,8 +16,8 @@ exports.createSauce = async(req, res, next) => {
         })
         await newSauce.save()
         return res.status(201).json({ message: 'sauce successfully created' })
-    } catch (e) {
-        return res.status(500).json({ message: 'unable to save sauce' })
+    } catch {
+        return res.status(400).json({ message: 'unable to save sauce' })
     }
 
 }
@@ -25,20 +25,18 @@ exports.createSauce = async(req, res, next) => {
 exports.sauce = async(req, res, next) => {
     try {
         const allSauces = await Sauce.find()
-        console.log(allSauces)
         return res.status(200).json(allSauces)
     } catch {
-        return res.status(401).json({ message: 'no sauces to display' })
+        return res.status(204).json({ message: 'no sauces to display' })
     }
 
 }
 exports.sauceById = async(req, res, next) => {
     try {
         const sauce = await Sauce.findById(req.params.id)
-        console.log(req.params.id)
         return res.status(200).json(sauce)
     } catch {
-        return res.status(401).json({ message: 'no sauce with this id' })
+        return res.status(204).json({ message: 'no sauce with this id' })
     }
 }
 
@@ -79,7 +77,7 @@ exports.deleteSauce = async(req, res, next) => {
     try {
         const sauce = await Sauce.findById(req.params.id)
         fs.unlink('images/' + sauce.imageUrl.split('/images/')[1], (error) => {
-            if (error) throw error
+            if (error) return res.status(204).json({ message: error })
         })
         await Sauce.findByIdAndDelete(req.params.id)
         return res.status(200).json({ message: 'Sauce deleted' })
@@ -96,6 +94,7 @@ exports.likeSauce = async(req, res, next) => {
         let disLikeIds = sauce.usersDisLiked.filter(storedIds => {
             return storedIds != userId
         })
+
         let likeIds = sauce.usersLiked.filter(storedIds => {
             return storedIds != userId
         })
@@ -118,7 +117,7 @@ exports.likeSauce = async(req, res, next) => {
         await Sauce.findByIdAndUpdate(req.params.id, likeInfo)
         return res.status(200).json({ message: `Sauce has been ${likeStatus}` })
 
-    } catch (error) {
-        res.status(400).json({ error })
+    } catch {
+        res.status(400).json({ message: 'Sauce id could not be found' })
     }
 }

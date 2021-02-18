@@ -8,11 +8,11 @@ module.exports = async(req, res, next) => {
         const decodeToken = jwt.verify(token, process.env.SECRET_TOKEN)
 
         if (sauce.userId != decodeToken.userId) {
-            return res.status(401).json({ message: 'invalid user' })
+            return res.status(401).json({ message: 'Unauthorized user' })
         }
         next()
 
     } catch {
-        return res.status(401).json({ message: 'invalid user' })
+        return res.status(401).json({ message: 'Unauthorized user' })
     }
 }
