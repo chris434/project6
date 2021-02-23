@@ -1,0 +1,2 @@
+DB_CONNECT = <url>
+SECRET_TOKEN = <token>

@@ -50,7 +50,7 @@ exports.modifySauce = async(req, res, next) => {
         if (req.file) {
             url = req.protocol + '://' + req.get('host') + '/images/' + req.file.filename
             fs.unlink('images/' + image.imageUrl.split('/images/')[1], (error) => {
-                if (error) throw error
+                if (error) return res.status(204).json({ message: error })
             })
             req.body = JSON.parse(req.body.sauce)
         }
@@ -118,6 +118,6 @@ exports.likeSauce = async(req, res, next) => {
         return res.status(200).json({ message: `Sauce has been ${likeStatus}` })
 
     } catch {
-        res.status(400).json({ message: 'Sauce id could not be found' })
+        return res.status(400).json({ message: 'Sauce id could not be found' })
     }
 }
